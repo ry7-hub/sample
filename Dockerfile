@@ -1,21 +1,12 @@
-# Base Image
-FROM jupyter/base-notebook
+# ベースイメージ
+FROM ubuntu:latest
 
-# Maintainer
-LABEL maintainer "Shiho ASA"
+# nginxをインストール
+RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get -y install nginx
 
-# Configure environment
-ENV CONDA_DIR=/opt/conda \
-    NB_USER=jovyan
-    
-# Install Jupyter Notebook and Hub
-RUN conda install --quiet --yes \
-    'numpy=1.13.*' \
-    'scipy=0.19.*' \
-    'sympy=1.1.*' \
-    'matplotlib=2.1.*' \
-    && conda clean -tipsy && \
-    fix-permissions $CONDA_DIR
+# ポートの設定
+EXPOSE 80
 
-# Install Sample Notebook
-COPY sample_notebook/CavityFlow_with_Navier-Stokes.ipynb /home/$NB_USER/
+# サーバの実行
+CMD ["nginx", "-g", "daemon off;"]
