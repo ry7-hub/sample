@@ -8,5 +8,8 @@ RUN apt-get -y install nginx
 # ポートの設定
 EXPOSE 80
 
+# webコンテンツの配置
+ONBUILD ADD website.tar /var/www/html/
+
 # サーバの実行
 CMD ["nginx", "-g", "daemon off;"]
