@@ -9,7 +9,7 @@ RUN apt-get -y install nginx
 EXPOSE 80
 
 # webコンテンツの配置
-ONBUILD ADD website.tar /var/www/html/
+ADD website.tar /var/www/html/
 
 # サーバの実行
 CMD ["nginx", "-g", "daemon off;"]
